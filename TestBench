@@ -1,0 +1,23 @@
+//TestBench for DigClock
+`timescale 1ns / 1ps
+module DigClocktb();
+ 	reg clk,rst;
+ 	wire [4:0] HOURS;
+ 	wire [5:0] SECONDS,MINUTES;
+ 	DigClock dut(.clk(clk), .rst(rst), .HOURS(HOURS), .MINUTES(MINUTES), .SECONDS(SECONDS));
+ 	initial 
+ 	begin
+ 		clk=0;
+ 		$monitor($time,"HOURS: %d MINUTES: %d SECONDS: 			%d",HOURS,MINUTES,SECONDS);
+ 		$dumpfile("DigClk.vcd");
+ 		$dumpvars(0,DigClocktb);
+ 	end
+ 	always
+ 		#500000000 clk=~clk;
+ 	initial
+ 	begin
+ 		#50 rst = 1;
+ 		#100 rst = 0;
+ 		#5000000000 $finish;
+	end
+endmodule
